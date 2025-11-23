@@ -1,21 +1,5 @@
 <!DOCTYPE html>
-<html lang="fa" dir="rtl">
-<head>
-    <meta charset="UTF-8">
-    <title>README | شبیه‌ساز اوربیتال اتمی</title>
-    <style>
-        body { font-family: Tahoma, Arial, sans-serif; line-height: 1.6; margin: 20px; color: #333; background-color: #f9f9f9; }
-        h1, h2 { border-bottom: 2px solid #007bff; padding-bottom: 5px; color: #0056b3; }
-        code { background-color: #eee; padding: 2px 4px; border-radius: 3px; font-family: monospace; }
-        pre { background-color: #272727; color: #f0f0f0; padding: 10px; border-radius: 5px; overflow-x: auto; }
-        table { border-collapse: collapse; width: 100%; margin: 15px 0; }
-        th, td { border: 1px solid #ddd; padding: 10px; text-align: right; }
-        th { background-color: #f2f2f2; color: #333; }
-        ul { list-style-type: disc; padding-right: 20px; }
-    </style>
-</head>
-<body>
-
+    <h1>README | شبیه‌ساز اوربیتال اتمی</h1>
     <h1>⚛️ شبیه‌ساز اوربیتال اتمی (Atomic Orbital Simulator)</h1>
     <p>این پروژه یک شبیه‌ساز تعاملی سه‌بعدی است که ساختار و شکل اوربیتال‌های اتمی (مانند <i>s</i>, <i>p</i>, <i>d</i>, <i>f</i> و بالاتر) را با استفاده از تکنولوژی <strong>WebGL 2.0</strong> و الگوریتم <strong>Ray Marching</strong> رندر می‌کند. این شبیه‌ساز از تابع موج هیدروژن‌گونه (Hydrogen-like Wave Function) استفاده می‌کند و قابلیت تنظیم بار مؤثر هسته ($\text{Z}_{\text{eff}}$) بر اساس قواعد اسلیتر (Slater's Rules) را دارد.</p>
 
