@@ -2,598 +2,123 @@
 <html lang="fa" dir="rtl">
 <head>
     <meta charset="UTF-8">
-    <title>شبیه‌ساز اوربیتال اتمی (با قابلیت زوم)</title>
+    <title>README | شبیه‌ساز اوربیتال اتمی</title>
     <style>
-        body { 
-            margin: 0; 
-            background-color: #1a1a1a; 
-            display: flex; 
-            flex-direction: column; 
-            align-items: center; 
-            font-family: Tahoma, sans-serif; 
-            color: #ccc; 
-            padding-bottom: 20px;
-        }
-        canvas { 
-            border: 1px solid #444; 
-            margin-top: 10px; 
-            cursor: grab;
-        }
-        canvas:active {
-            cursor: grabbing;
-        }
-        h1 { color: #fff; }
-        .controls { 
-            display: flex; 
-            flex-wrap: wrap; 
-            gap: 20px; 
-            padding: 15px; 
-            background-color: #222; 
-            border-radius: 8px; 
-            margin-top: 10px; 
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5); 
-        }
-        .control-group { 
-            display: flex; 
-            flex-direction: column; 
-            align-items: center; 
-            min-width: 150px;
-        }
-        label { margin-bottom: 5px; font-size: 0.9em; }
-        input[type="range"] { width: 150px; }
-        input[type="color"] { width: 80px; height: 30px; border: none; border-radius: 4px; padding: 2px; }
-        #log { margin-top: 10px; color: yellow; font-weight: bold; }
-        #ZeffDisplay { color: #8aff8a; font-weight: bold; margin-top: 15px; font-size: 1.1em; }
+        body { font-family: Tahoma, Arial, sans-serif; line-height: 1.6; margin: 20px; color: #333; background-color: #f9f9f9; }
+        h1, h2 { border-bottom: 2px solid #007bff; padding-bottom: 5px; color: #0056b3; }
+        code { background-color: #eee; padding: 2px 4px; border-radius: 3px; font-family: monospace; }
+        pre { background-color: #272727; color: #f0f0f0; padding: 10px; border-radius: 5px; overflow-x: auto; }
+        table { border-collapse: collapse; width: 100%; margin: 15px 0; }
+        th, td { border: 1px solid #ddd; padding: 10px; text-align: right; }
+        th { background-color: #f2f2f2; color: #333; }
+        ul { list-style-type: disc; padding-right: 20px; }
     </style>
 </head>
 <body>
-    <h1>مدل سه‌بعدی اوربیتال‌ها (با قابلیت زوم)</h1>
-    <canvas id="glCanvas" width="800" height="600"></canvas>
+
+    <h1>⚛️ شبیه‌ساز اوربیتال اتمی (Atomic Orbital Simulator)</h1>
+    <p>این پروژه یک شبیه‌ساز تعاملی سه‌بعدی است که ساختار و شکل اوربیتال‌های اتمی (مانند <i>s</i>, <i>p</i>, <i>d</i>, <i>f</i> و بالاتر) را با استفاده از تکنولوژی <strong>WebGL 2.0</strong> و الگوریتم <strong>Ray Marching</strong> رندر می‌کند. این شبیه‌ساز از تابع موج هیدروژن‌گونه (Hydrogen-like Wave Function) استفاده می‌کند و قابلیت تنظیم بار مؤثر هسته ($\text{Z}_{\text{eff}}$) بر اساس قواعد اسلیتر (Slater's Rules) را دارد.</p>
+
+    <hr>
+
+    <h2>🌟 ویژگی‌های کلیدی</h2>
+    <ul>
+        <li><strong>رندرینگ سه‌بعدی با کارایی بالا:</strong> استفاده از <strong>GLSL Fragment Shader</strong> و Ray Marching برای نمایش سریع و دقیق توزیع چگالی احتمال ($\Psi^2$).</li>
+        <li><strong>پشتیبانی از اوربیتال‌های بالا:</strong> قابلیت شبیه‌سازی تا <strong>N=8</strong> و <strong>L=7</strong> (اوربیتال‌های s تا h و بالاتر).</li>
+        <li><strong>محاسبه $\text{Z}_{\text{eff}}$:</strong> بار مؤثر هسته بر اساس عدد اتمی (Z) و اعداد کوانتومی (n, l) با استفاده از قواعد اسلیتر محاسبه می‌شود.</li>
+        <li><strong>کنترل‌های تعاملی:</strong>
+            <ul>
+                <li><strong>تنظیم پارامترهای کوانتومی:</strong> N (اصلی)، L (آزیموتال)، M<sub>L</sub> (مغناطیسی).</li>
+                <li><strong>چرخش و زوم:</strong> قابلیت چرخش کامل اوربیتال با موس و زوم با اسکرول موس.</li>
+                <li><strong>فاز رنگی:</strong> نمایش فازهای مثبت ($\Psi > 0$) و منفی ($\Psi < 0$) تابع موج با رنگ‌های قابل تنظیم.</li>
+            </ul>
+        </li>
+    </ul>
+
+    <hr>
+
+    <h2>🛠️ نحوه استفاده</h2>
+
+    <h3>۱. اجرای پروژه</h3>
+    <p>به دلیل استفاده از تکنولوژی WebGL و جاوااسکریپت خالص، تنها کافی است فایل <strong><code>iii.html</code></strong> را در مرورگر وب خود باز کنید.</p>
+
+    <h3>۲. کنترل‌ها</h3>
+    <table>
+        <thead>
+            <tr>
+                <th>ورودی کنترلی</th>
+                <th>مقدار</th>
+                <th>تأثیر</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><strong>Z (عدد اتمی)</strong></td>
+                <td>1 تا 150</td>
+                <td>تعیین عنصر و محاسبه $\text{Z}_{\text{eff}}$</td>
+            </tr>
+            <tr>
+                <td><strong>N (اصلی)</strong></td>
+                <td>1 تا 8</td>
+                <td>تعیین لایه انرژی</td>
+            </tr>
+            <tr>
+                <td><strong>L (آزیموتال)</strong></td>
+                <td>0 تا N-1</td>
+                <td>تعیین شکل اوربیتال (0=s, 1=p, 2=d, 3=f, ...)</td>
+            </tr>
+            <tr>
+                <td><strong>M<sub>L</sub> (مغناطیسی)</strong></td>
+                <td>-L تا +L</td>
+                <td>تعیین جهت‌گیری اوربیتال در فضا</td>
+            </tr>
+            <tr>
+                <td><strong>🔍 زوم</strong></td>
+                <td>1.0 تا 100.0</td>
+                <td>تنظیم فاصله دوربین از مرکز اتم (همچنین با اسکرول موس)</td>
+            </tr>
+            <tr>
+                <td><strong>چگالی</strong></td>
+                <td>1 تا 100</td>
+                <td>تنظیم حساسیت نمایش چگالی احتمال ($\Psi^2$)</td>
+            </tr>
+            <tr>
+                <td><strong>🎨 رنگ‌ها</strong></td>
+                <td>(انتخابگر رنگ)</td>
+                <td>تنظیم رنگ برای فازهای مثبت و منفی تابع موج</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <h3>۳. تعامل سه‌بعدی</h3>
+    <ul>
+        <li><strong>چرخش:</strong> ماوس را روی اوربیتال کلیک کرده و بکشید (Drag) تا آن را بچرخانید.</li>
+        <li><strong>زوم:</strong> از غلتک (Scroll Wheel) موس برای نزدیک شدن یا دور شدن از اتم استفاده کنید.</li>
+    </ul>
     
-    <div class="controls">
-        <div class="control-group">
-            <label for="atomicZ">Z (عدد اتمی): <span id="atomicZValue">8</span></label>
-            <input type="range" id="atomicZ" min="1" max="150" value="8" step="1">
-            <span id="elementName">اکسیژن (O)</span>
-        </div>
+    <hr>
 
-        <div class="control-group">
-            <label for="n">N (اصلی): <span id="nValue">2</span></label>
-            <input type="range" id="n" min="1" max="8" value="2" step="1">
-        </div>
-        <div class="control-group">
-            <label for="l">L (آزیموتال): <span id="lValue">1</span></label>
-            <input type="range" id="l" min="0" max="7" value="1" step="1">
-        </div>
-        <div class="control-group">
-            <label for="ml">ML (مغناطیسی): <span id="mlValue">0</span></label>
-            <input type="range" id="ml" min="-7" max="7" value="0" step="1">
-        </div>
-        
-        <div class="control-group">
-            <label for="zoomRange">🔍 زوم (دوربین Z): <span id="zoomValue">3.0</span></label>
-            <input type="range" id="zoomRange" min="1.0" max="100.0" value="3.0" step="0.1">
-        </div>
+    <h2>📚 ساختار کد</h2>
+    <p>قلب این پروژه در فایل <strong><code>iii.html</code></strong> و درون <strong>Fragment Shader (GLSL)</strong> آن نهفته است:</p>
+    <ul>
+        <li><strong>JavaScript:</strong> مسئول مدیریت رابط کاربری، تنظیم WebGL، محاسبه بار مؤثر هسته ($\text{Z}_{\text{eff}}$) و ارسال یونیفرم‌ها (Uniforms) به Shader.</li>
+        <li><strong>Fragment Shader (GLSL):</strong> شامل توابع اصلی ریاضی برای مدل‌سازی کوانتومی:
+            <ul>
+                <li><code>laguerreL()</code>: محاسبه چندجمله‌ای‌های تعمیم یافته لاگر.</li>
+                <li><code>assocLegendre()</code>: محاسبه چندجمله‌ای‌های لژاندر وابسته.</li>
+                <li><code>realY()</code>: محاسبه هارمونیک‌های کروی حقیقی (قسمت زاویه‌ای).</li>
+                <li><code>radialHydrogen()</code>: محاسبه قسمت شعاعی تابع موج هیدروژن‌گونه.</li>
+                <li><code>main()</code>: اجرای الگوریتم <strong>Ray Marching</strong> برای جمع‌آوری چگالی ($\Psi^2$) در طول پرتو.</li>
+            </ul>
+        </li>
+    </ul>
 
-        <div class="control-group">
-            <label for="density">چگالی (نمایش): <span id="densityValue">10</span></label>
-            <input type="range" id="density" min="1" max="100" value="10" step="1">
-        </div>
-        <div class="control-group">
-            <label for="colorPickerPositive">🎨 فاز مثبت ($\Psi > 0$):</label>
-            <input type="color" id="colorPickerPositive" value="#FF0000">
-        </div>
-        <div class="control-group">
-            <label for="colorPickerNegative">🎨 فاز منفی ($\Psi < 0$):</label>
-            <input type="color" id="colorPickerNegative" value="#0000FF">
-        </div>
-    </div>
-    
-    <div id="ZeffDisplay">Zeff (بار مؤثر هسته): 4.55</div>
-    <div id="log"></div>
+    <hr>
 
-<script>
-// ------------------------------------------------------------------
-// 1. JAVASCRIPT LOGIC (WebGl Setup, Controls, Zeff Calculation)
-// ------------------------------------------------------------------
+    <h2>📜 مشارکت (Contribution)</h2>
+    <p>از هرگونه بازخورد، گزارش اشکال (Bug Report) یا مشارکت برای بهبود دقت یا عملکرد استقبال می‌شود.</p>
 
-const elementNames = {
-    // ... (دیکشنری کامل نام عناصر) ...
-    1: "هیدروژن (H)", 2: "هلیوم (He)", 3: "لیتیم (Li)", 4: "بریلیم (Be)", 5: "بور (B)", 
-    6: "کربن (C)", 7: "نیتروژن (N)", 8: "اکسیژن (O)", 9: "فلوئور (F)", 10: "نئون (Ne)",
-    11: "سدیم (Na)", 12: "منیزیم (Mg)", 13: "آلومینیوم (Al)", 14: "سیلیسیم (Si)", 15: "فسفر (P)",
-    16: "گوگرد (S)", 17: "کلر (Cl)", 18: "آرگون (Ar)", 19: "پتاسیم (K)", 20: "کلسیم (Ca)",
-    21: "اسکاندیم (Sc)", 22: "تیتانیوم (Ti)", 23: "وانادیم (V)", 24: "کروم (Cr)", 25: "منگنز (Mn)",
-    26: "آهن (Fe)", 27: "کبالت (Co)", 28: "نیکل (Ni)", 29: "مس (Cu)", 30: "روی (Zn)",
-    31: "گالیم (Ga)", 32: "ژرمانیم (Ge)", 33: "آرسنیک (As)", 34: "سلنیم (Se)", 35: "برم (Br)", 36: "کریپتون (Kr)",
-    37: "روبیدیم (Rb)", 38: "استرانسیم (Sr)", 39: "ایتریم (Y)", 40: "زیرکونیم (Zr)", 41: "نیوبیم (Nb)", 42: "مولیبدن (Mo)", 
-    43: "تکنسیوم (Tc)", 44: "روتنیم (Ru)", 45: "رودیم (Rh)", 46: "پالادیم (Pd)", 47: "نقره (Ag)", 48: "کادمیم (Cd)", 
-    49: "ایندیوم (In)", 50: "قلع (Sn)", 51: "آنتی‌موان (Sb)", 52: "تلوریم (Te)", 53: "ید (I)", 54: "زنون (Xe)",
-    55: "سزیم (Cs)", 56: "باریم (Ba)", 57: "لانتان (La)", 
-    58: "سریم (Ce)", 59: "پرازئودیمیم (Pr)", 60: "نئودیمیم (Nd)", 61: "پرومتیم (Pm)", 62: "ساماریم (Sm)", 
-    63: "یوروپیم (Eu)", 64: "گادولینیم (Gd)", 65: "تربیم (Tb)", 66: "دیسپروزیم (Dy)", 67: "هولمیم (Ho)", 
-    68: "اربیوم (Er)", 69: "تولیم (Tm)", 70: "ایتربیم (Yb)", 71: "لوتتیم (Lu)",
-    72: "هافنیم (Hf)", 73: "تانتال (Ta)", 74: "تنگستن (W)", 75: "رنیوم (Re)", 76: "اسمیم (Os)", 
-    77: "ایریدیم (Ir)", 78: "پلاتین (Pt)", 79: "طلا (Au)", 80: "جیوه (Hg)", 81: "تالیم (Tl)", 
-    82: "سرب (Pb)", 83: "بیسموت (Bi)", 84: "پولونیم (Po)", 85: "استاتین (At)", 86: "رادون (Rn)",
-    87: "فرانسیم (Fr)", 88: "رادیم (Ra)", 89: "اکتینیم (Ac)",
-    90: "توریم (Th)", 91: "پروتاکتینیم (Pa)", 92: "اورانیوم (U)", 93: "نپتونیوم (Np)", 94: "پلوتونیوم (Pu)", 
-    95: "آمریکیوم (Am)", 96: "کوریم (Cm)", 97: "برکلیوم (Bk)", 98: "کالیفرنیوم (Cf)", 99: "اینشتینیوم (Es)", 
-    100: "فرمیوم (Fm)", 101: "مندلیوم (Md)", 102: "نوبلیوم (No)", 103: "لورنسیم (Lr)",
-    104: "رادرفوردیم (Rf)", 105: "دوبنیم (Db)", 106: "سیبورگیم (Sg)", 107: "بوریم (Bh)", 108: "هاسیم (Hs)", 
-    109: "مایتنریم (Mt)", 110: "دارمشتادیم (Ds)", 111: "روئنتگنیوم (Rg)", 112: "کوپرنیسیم (Cn)", 
-    113: "نیهونیوم (Nh)", 114: "فلروویوم (Fl)", 115: "مسکوویم (Mc)", 116: "لیورموریوم (Lv)", 117: "تنسین (Ts)", 
-    118: "اوگانسون (Og)" 
-};
+    <p><strong>تذکر:</strong> در شبیه‌سازهای Ray Marching، ممکن است برای Nهای بالا نیاز به افزایش تنظیمات <strong>Density</strong> برای مشاهده بهتر لایه‌های گره‌ای (Nodal Surfaces) باشد.</p>
 
-function hexToRgb(hex) {
-    const bigint = parseInt(hex.slice(1), 16);
-    const r = (bigint >> 16) & 255;
-    const g = (bigint >> 8) & 255;
-    const b = bigint & 255;
-    return [r / 255.0, g / 255.0, b / 255.0];
-}
-
-function calculateSlaterZeff(Z, n, l) {
-    if (Z === 1) return 1.0;
-    if (Z > 120) {
-        document.getElementById('log').innerText = `⚠️ Z=${Z}: مدل غیر نسبیتی فاقد اعتبار فیزیکی است.`;
-        return 1.0; 
-    } else {
-        document.getElementById('log').innerText = "";
-    }
-    
-    let inner_electrons = 0; 
-    if (Z <= 2) inner_electrons = 0; 
-    else if (Z <= 10) inner_electrons = 2; 
-    else if (Z <= 18) inner_electrons = 10; 
-    else if (Z <= 36) inner_electrons = 18; 
-    else if (Z <= 54) inner_electrons = 36; 
-    else if (Z <= 86) inner_electrons = 54; 
-    else if (Z <= 118) inner_electrons = 86; 
-    
-    let valence_electrons = Z - inner_electrons;
-    let S_val = 0.0; 
-    
-    if (n === 1) {
-        S_val += (Z - 1) * 0.30;
-    } else {
-        let core_shells = 0;
-        if (n === 3) core_shells = 2; 
-        if (n === 4) core_shells = 10; 
-        
-        let S_core = core_shells * 1.0;
-        let S_penultimate = (inner_electrons - core_shells) * 0.85; 
-
-        S_val = S_core + S_penultimate;
-        S_val += Math.max(0, valence_electrons - 1) * 0.35;
-    }
-
-    let Zeff = Z - S_val;
-    return Math.max(1.0, Zeff); 
-}
-
-// ------------------------------------------------------------------
-// 2. GLSL SHADER CODE (تغییر موقعیت دوربین برای زوم)
-// ------------------------------------------------------------------
-
-const vertSrc = `#version 300 es
-in vec4 aPosition;
-out vec2 vUv;
-void main() {
-  gl_Position = aPosition;
-  vUv = (aPosition.xy + 1.0) * 0.5;
-}
-`;
-
-const fragSrc = `#version 300 es
-precision highp float;
-in vec2 vUv;
-out vec4 outColor;
-
-uniform float uTime;
-uniform vec3 uCam;
-uniform float uN;
-uniform int uL;
-uniform int uML;
-uniform float uZeff; 
-uniform float uDensity;
-uniform vec2 uRes;
-uniform vec3 uOrbitalColorPositive; 
-uniform vec3 uOrbitalColorNegative; 
-
-// ثابت‌ها
-const float PI = 3.141592653589793;
-const float A0 = 1.0; 
-const int MAX_FACT = 30; // حداکثر فاکتوریل قابل محاسبه برای N=8
-
-// تابع فاکتوریل
-float factorialf(int n) {
-  if (n < 0 || n > MAX_FACT) return 0.0;
-  if (n == 0 || n == 1) return 1.0;
-  float f = 1.0; 
-  for (int i = 2; i <= n; i++) {
-    f *= float(i);
-  }
-  return f;
-}
-
-// تابع چندجمله‌ای لاگر تعمیم یافته (L_p^a(x)) - **اصلاح شده**
-float laguerreL(int p, int a, float x) {
-  if (p == 0) return 1.0;
-  if (p == 1) return 1.0 + float(a) - x;
-
-  float L0 = 1.0; 
-  float L1 = 1.0 + float(a) - x; 
-  float Ln = 0.0;
-  
-  // شروع از k=1 (برای محاسبه L2) تا p-1
-  for (int k = 1; k < p; k++) { 
-    // از فرمول بازگشتی استفاده می‌کنیم: Ln+1 = ...
-    Ln = ((2.0 * float(k) + float(a) + 1.0 - x) * L1 - (float(k) + float(a)) * L0) / (float(k) + 1.0);
-    L0 = L1;
-    L1 = Ln;
-  }
-  // L1 اکنون آخرین مقدار محاسبه شده (Lp) است.
-  return L1;
-}
-
-// تابع چندجمله‌ای لژاندر وابسته (P_l^m(cos(theta)))
-float assocLegendre(int l, int m, float x) {
-  if (abs(m) > l) return 0.0; 
-  int absM = abs(m);
-
-  // محاسبه P_m^m
-  float Pmm;
-  if (absM == 0) {
-      Pmm = 1.0;
-  } else {
-      // ضریب (-1)^m * (2m-1)!!
-      float doubleFact = 1.0;
-      for (int i = 1; i <= absM; i++) doubleFact *= (2.0 * float(i) - 1.0);
-      Pmm = pow(-1.0, float(absM)) * doubleFact * pow(1.0 - x*x, float(absM)/2.0);
-  }
-  
-  if (l == absM) return Pmm;
-  
-  // محاسبه P_{m+1}^m
-  float Pmp1 = x * (2.0 * float(absM) + 1.0) * Pmm;
-  if (l == absM + 1) return Pmp1;
-
-  // محاسبه P_l^m برای l > m + 1
-  float Pk_m2 = Pmm;
-  float Pk_m1 = Pmp1;
-  float Pk = 0.0;
-  
-  for (int k = absM + 2; k <= l; k++) {
-    Pk = ((2.0 * float(k) - 1.0) * x * Pk_m1 - (float(k) + float(absM) - 1.0) * Pk_m2) / (float(k) - float(absM));
-    Pk_m2 = Pk_m1;
-    Pk_m1 = Pk;
-  }
-  
-  return Pk;
-}
-
-// تابع قسمت زاویه‌ای واقعی (Y_l^m)
-float realY(int l, int m, float theta, float phi){
-  int absM = abs(m);
-  float x = cos(theta); 
-  
-  float norm = sqrt( (2.0*float(l)+1.0)/(4.0*PI) * factorialf(l-absM)/factorialf(l+absM) );
-  float Plm = assocLegendre(l, absM, x);
-  float Y = norm * Plm;
-
-  if (m > 0) {
-    Y *= sqrt(2.0) * cos(float(m) * phi);
-  } else if (m < 0) {
-    Y *= sqrt(2.0) * sin(float(absM) * phi);
-  }
-  
-  return Y;
-}
-
-// تابع قسمت شعاعی هیدروژن (R_n,l)
-float radialHydrogen(float n, int l, float r, float Zeff){
-  float rho = 2.0 * Zeff * r / (n*A0);
-  int p = int(n) - l - 1; 
-  
-  if (p<0 || l >= int(n)) return 0.0;
-  
-  float n_int = float(int(n)); 
-  
-  float pref_num = pow(2.0*Zeff/(n_int*A0), 1.5) * sqrt(factorialf(p));
-  float pref_den = sqrt(2.0 * n_int * factorialf(int(n_int) + l));
-  float pref = pref_num / pref_den;
-  
-  float L = laguerreL(p, 2*l + 1, rho); 
-  
-  return pref * pow(r, float(l)) * exp(-rho/2.0) * L;
-}
-
-// تابع چرخش دوربین
-mat3 rot(float rx, float ry, float rz){
-  float cx = cos(rx); float sx = sin(rx);
-  float cy = cos(ry); float sy = sin(ry);
-  float cz = cos(rz); float sz = sin(rz);
-
-  mat3 M = mat3(
-    cy*cz, cy*sz, -sy,
-    cz*sx*sy - cx*sz, cx*cz + sx*sy*sz, cy*sx,
-    cx*cz*sy + sx*sz, -cz*sx + cx*sy*sz, cx*cy
-  );
-  return M;
-}
-
-
-// تابع اصلی رندر
-void main(){
-  float R_SCALE = max(2.2, uN*uN / uZeff * 1.5); 
-  float R = R_SCALE;
-
-  vec2 uv = vUv*2.0 - 1.0;
-  // ro.z (فاصله دوربین از مرکز) اکنون توسط uCam.z کنترل می‌شود.
-  vec3 ro = vec3(0.0, 0.0, uCam.z); 
-  vec3 rd = normalize(vec3(uv, -1.8)); 
-  
-  mat3 M = rot(uCam.x, uCam.y, 0.0); // uCam.z را از چرخش حذف کنید
-  ro = M * ro;
-  rd = M * rd;
-
-  // برخورد پرتو با مکعب مرجع
-  vec3 invD = 1.0 / rd;
-  vec3 t0s = (vec3(-R) - ro) * invD;
-  vec3 t1s = (vec3(+R) - ro) * invD;
-  vec3 tsm = min(t0s, t1s);
-  vec3 tsM = max(t0s, t1s);
-  float t0 = max( max(tsm.x, tsm.y), tsm.z );
-  float t1 = min( min(tsM.x, tsM.y), tsM.z );
-  if (t1 < max(t0,0.0)) { outColor = vec4(0.04,0.06,0.08,1.0); return; } 
-
-  float t = max(t0, 0.0);
-  
-  // دو انباشتگر چگالی برای فازهای مثبت و منفی
-  float accumPos = 0.0;
-  float accumNeg = 0.0;
-  
-  const int MAX_STEPS = 512;
-  int STEPS = int(uRes.x * R_SCALE / 320.0);  
-  STEPS = min(STEPS, MAX_STEPS);
-  float dt = (t1 - t0) / float(STEPS); 
-
-  // Ray Marching
-  for (int i=0;i<STEPS;i++){
-    vec3 p = ro + rd * (t + float(i)*dt);
-    float r = length(p);
-    
-    if (r > R * 2.0) continue; 
-
-    float theta = (r > 0.0) ? acos(p.z / r) : 0.0;
-    float phi = atan(p.y, p.x);
-
-    float Y = realY(uL, uML, theta, phi);
-    float Rn = radialHydrogen(uN, uL, r, uZeff);
-    float psi = Rn * Y; // تابع موج (با علامت)
-    float psi2 = psi*psi; // چگالی احتمال
-
-    // انباشت چگالی بر اساس فاز (علامت)
-    if (psi >= 0.0) {
-        accumPos += psi2 * dt;
-    } else {
-        accumNeg += psi2 * dt;
-    }
-  }
-
-  // محاسبه رنگ نهایی
-  float tcolPos = sqrt(accumPos * uDensity * 500.0); 
-  float tcolNeg = sqrt(accumNeg * uDensity * 500.0); 
-
-  // ترکیب رنگ‌های فاز با چگالی مربوطه
-  vec3 colorPos = uOrbitalColorPositive * tcolPos;
-  vec3 colorNeg = uOrbitalColorNegative * tcolNeg;
-  
-  vec3 baseColor = vec3(0.04, 0.06, 0.08); // رنگ پس‌زمینه/ محیطی
-  vec3 rgb = baseColor + colorPos + colorNeg;
-  
-  // افزایش کلی روشنایی و کنتراست
-  float totalIntensity = tcolPos + tcolNeg;
-  rgb = rgb * (1.0 + totalIntensity * 1.5); 
-  
-  outColor = vec4(rgb, 1.0);
-}
-`;
-
-// ------------------------------------------------------------------
-// 3. JAVASCRIPT LOGIC (WebGL Runtime)
-// ------------------------------------------------------------------
-
-const canvas = document.getElementById('glCanvas');
-const gl = canvas.getContext('webgl2');
-
-function compileShader(source, type) {
-    const shader = gl.createShader(type);
-    gl.shaderSource(shader, source);
-    gl.compileShader(shader);
-    if (!gl.getShaderParameter(shader, gl.COMPILE_STATUS)) {
-        const info = gl.getShaderInfoLog(shader);
-        document.getElementById('log').innerText = `خطای کامپایل Shader: ${info}`;
-        gl.deleteShader(shader);
-        return null;
-    }
-    return shader;
-}
-
-if (!gl) { alert("مرورگر شما از WebGL 2.0 پشتیبانی نمی‌کند."); }
-
-const vertexShader = compileShader(vertSrc, gl.VERTEX_SHADER);
-const fragmentShader = compileShader(fragSrc, gl.FRAGMENT_SHADER);
-
-if (!vertexShader || !fragmentShader) {
-    document.getElementById('log').innerText = "خطای حیاتی: Shaderها کامپایل نشدند.";
-    throw new Error("Shader compilation failed.");
-}
-
-const program = gl.createProgram();
-gl.attachShader(program, vertexShader);
-gl.attachShader(program, fragmentShader);
-gl.linkProgram(program);
-
-if (!gl.getProgramParameter(program, gl.LINK_STATUS)) {
-    document.getElementById('log').innerText = `خطای لینک برنامه: ${gl.getProgramInfoLog(program)}`;
-    throw new Error("Program linking failed.");
-}
-
-gl.useProgram(program);
-
-// تنظیم هندسه (چهارگوش کامل صفحه)
-const positionAttributeLocation = gl.getAttribLocation(program, "aPosition");
-const positionBuffer = gl.createBuffer();
-gl.bindBuffer(gl.ARRAY_BUFFER, positionBuffer);
-const positions = new Float32Array([-1, -1, -1, 1, 1, -1, 1, 1,]);
-gl.bufferData(gl.ARRAY_BUFFER, positions, gl.STATIC_DRAW);
-gl.enableVertexAttribArray(positionAttributeLocation);
-gl.vertexAttribPointer(positionAttributeLocation, 2, gl.FLOAT, false, 0, 0);
-
-
-// مکان‌های Uniform
-const uTimeLoc = gl.getUniformLocation(program, 'uTime');
-const uCamLoc = gl.getUniformLocation(program, 'uCam');
-const uNLoc = gl.getUniformLocation(program, 'uN');
-const uLLoc = gl.getUniformLocation(program, 'uL');
-const uMLLoc = gl.getUniformLocation(program, 'uML');
-const uZeffLoc = gl.getUniformLocation(program, 'uZeff');
-const uDensityLoc = gl.getUniformLocation(program, 'uDensity');
-const uResLoc = gl.getUniformLocation(program, 'uRes');
-const uOrbitalColorPositiveLoc = gl.getUniformLocation(program, 'uOrbitalColorPositive'); 
-const uOrbitalColorNegativeLoc = gl.getUniformLocation(program, 'uOrbitalColorNegative');
-
-// متغیرهای کنترلی
-let atomicZ = 8; 
-let n = 2;
-let l = 1;
-let ml = 0;
-let density = 10.0;
-let Zeff = 4.55; 
-let orbitalColorPositive = hexToRgb('#FF0000'); 
-let orbitalColorNegative = hexToRgb('#0000FF'); 
-let camX = 0.0; 
-let camY = 0.0; 
-let camZ = 3.0; // مقدار اولیه زوم (فاصله دوربین)
-let mouseDown = false;
-let lastMouseX = 0;
-let lastMouseY = 0;
-
-// تابع بروزرسانی رابط کاربری (UI)
-function updateUI() {
-    Zeff = calculateSlaterZeff(atomicZ, n, l);
-    document.getElementById('atomicZValue').innerText = atomicZ;
-    document.getElementById('elementName').innerText = elementNames[atomicZ] || `Z=${atomicZ}`;
-    document.getElementById('ZeffDisplay').innerText = `Zeff (بار مؤثر هسته): ${Zeff.toFixed(2)}`;
-    document.getElementById('nValue').innerText = n;
-    document.getElementById('lValue').innerText = l;
-    document.getElementById('mlValue').innerText = ml;
-    document.getElementById('densityValue').innerText = density.toFixed(1);
-    document.getElementById('zoomValue').innerText = camZ.toFixed(1);
-
-
-    // اعمال محدودیت‌های فیزیکی (N=8، L=7)
-    const n_max = 8; 
-    document.getElementById('n').max = n_max;
-    if (n > n_max) { n = n_max; }
-
-    const l_max = n - 1;
-    document.getElementById('l').max = l_max;
-    
-    // ML محدودیت جدید بر اساس L (تا 7)
-    document.getElementById('ml').max = l;
-    document.getElementById('ml').min = -l;
-    
-    if (l >= n) { l = n - 1; }
-    if (Math.abs(ml) > l) { ml = 0; }
-    
-    document.getElementById('n').value = n;
-    document.getElementById('l').value = l;
-    document.getElementById('ml').value = ml;
-    document.getElementById('density').value = density;
-    document.getElementById('zoomRange').value = camZ;
-}
-
-// گوش دادن به ورودی‌های کنترلی
-document.getElementById('atomicZ').addEventListener('input', (e) => { atomicZ = parseInt(e.target.value); updateUI(); });
-document.getElementById('n').addEventListener('input', (e) => { n = parseInt(e.target.value); updateUI(); });
-document.getElementById('l').addEventListener('input', (e) => { l = parseInt(e.target.value); updateUI(); });
-document.getElementById('ml').addEventListener('input', (e) => { ml = parseInt(e.target.value); updateUI(); });
-document.getElementById('density').addEventListener('input', (e) => { density = parseFloat(e.target.value); updateUI(); });
-
-// رویداد لغزنده زوم (جدید)
-document.getElementById('zoomRange').addEventListener('input', (e) => { 
-    camZ = parseFloat(e.target.value);
-    updateUI(); 
-});
-
-// رویدادهای رنگ
-document.getElementById('colorPickerPositive').addEventListener('input', (e) => { orbitalColorPositive = hexToRgb(e.target.value); });
-document.getElementById('colorPickerNegative').addEventListener('input', (e) => { orbitalColorNegative = hexToRgb(e.target.value); });
-
-// کنترل‌های موس برای چرخش
-canvas.addEventListener('mousedown', (e) => { 
-    mouseDown = true; lastMouseX = e.clientX; lastMouseY = e.clientY;
-});
-canvas.addEventListener('mouseup', () => { 
-    mouseDown = false;
-});
-canvas.addEventListener('mousemove', (e) => { 
-    if (!mouseDown) return;
-    const dx = e.clientX - lastMouseX;
-    const dy = e.clientY - lastMouseY;
-    camY += dx * 0.01; 
-    camX += dy * 0.01; 
-    lastMouseX = e.clientX; lastMouseY = e.clientY;
-});
-
-// کنترل‌های موس برای زوم با Scroll (جدید)
-canvas.addEventListener('wheel', (e) => {
-    e.preventDefault(); 
-    const zoomSpeed = 0.5;
-    // deltaY مثبت = اسکرول به پایین (زوم اوت، افزایش camZ)
-    // deltaY منفی = اسکرول به بالا (زوم این، کاهش camZ)
-    camZ += e.deltaY * 0.01 * zoomSpeed; 
-    
-    // محدودیت زوم (بر اساس min/max لغزنده)
-    const minZoom = parseFloat(document.getElementById('zoomRange').min);
-    const maxZoom = parseFloat(document.getElementById('zoomRange').max);
-
-    camZ = Math.min(Math.max(camZ, minZoom), maxZoom);
-    updateUI();
-});
-
-
-// تابع اصلی رندرینگ
-function draw(time) {
-    gl.clearColor(0.04, 0.06, 0.08, 1.0); 
-    gl.clear(gl.COLOR_BUFFER_BIT);
-
-    gl.uniform1f(uTimeLoc, time * 0.001);
-    // ارسال uCam: شامل چرخش X، چرخش Y و زوم Z
-    gl.uniform3f(uCamLoc, camX, camY, camZ);
-    gl.uniform1f(uNLoc, parseFloat(n));
-    gl.uniform1i(uLLoc, l);
-    gl.uniform1i(uMLLoc, ml);
-    gl.uniform1f(uZeffLoc, Zeff); 
-    gl.uniform1f(uDensityLoc, density);
-    gl.uniform2f(uResLoc, canvas.width, canvas.height);
-    
-    // ارسال یونیفرم‌های رنگ
-    gl.uniform3fv(uOrbitalColorPositiveLoc, orbitalColorPositive); 
-    gl.uniform3fv(uOrbitalColorNegativeLoc, orbitalColorNegative);
-
-    gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
-    
-    requestAnimationFrame(draw);
-}
-
-// شروع رندر
-updateUI(); 
-requestAnimationFrame(draw);
-</script>
 </body>
 </html>
